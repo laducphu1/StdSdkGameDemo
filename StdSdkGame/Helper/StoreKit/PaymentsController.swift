@@ -46,7 +46,7 @@ struct Payment: Hashable {
     }
 }
 
-class PaymentsController: TransactionController {
+public class PaymentsController: TransactionController {
 
     private var payments: [Payment] = []
 

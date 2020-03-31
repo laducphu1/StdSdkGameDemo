@@ -9,17 +9,53 @@
 import UIKit
 import Foundation
 
-let kDomain = "https://stagmsdk.1tap.vn/"
-let kSDKSecretKey = "demomogamesdk123"
-let kSDKAppKey = "demomogamesdk"
-let kSDKClientOS = "ios"
-let kSecretKey = "c3556e0597414d989a1b391bfe30a676"
+var kDomain = "https://stagmsdk.1tap.vn/"
+var kSDKSecretKey = "demomogamesdk123"
+var kSDKAppKey = "demomogamesdk"
+var kSDKClientOS = "ios"
+var kSecretKey = "c3556e0597414d989a1b391bfe30a676"
+var kGoogleClientId = "794169653863-73i2n4g8a2nn4rdi9rfp911cv2vo09gu.apps.googleusercontent.com"
 
-class STDNetworkController: NSObject {
-    static let shared = STDNetworkController()
+@objc public class STDNetworkController: NSObject {
+    @objc public static let shared = STDNetworkController()
     
     private override init() {
         super.init()
+    }
+    
+    @objc public func checkUserDidLogin(_ success:(@escaping(_ userModel: STDUserModel?, _ error: String?) -> Void)) {
+        guard let user = STDAppDataSingleton.sharedInstance.userProfileModel else {
+            success(nil, nil)
+            return
+        }
+        
+        guard let urlConfig = STDAppDataSingleton.sharedInstance.urlsConfig?.uRLSynQuickDevice, urlConfig.count > 0 else {
+            return
+        }
+        
+        let currentTime = STDAppDataSingleton.sharedInstance.getTimeCurrent()
+        let plainText = "\(user.accessToken)\(currentTime)"
+        let sign = STDAppDataSingleton.sharedInstance.hmac(plainText: plainText, key: kSDKSecretKey)
+        let params = ["AccessToken": user.accessToken,
+                      "AppKey": kSDKAppKey,
+                      "Sign": sign,
+                      "Time": currentTime];
+        
+        STDNetworkController.shared.getUserByAccessToken(params: params) { (user, error) in
+            if let user = user {
+                STDAppDataSingleton.sharedInstance.userProfileModel = user
+                success(user, nil)
+            } else {
+                success(nil, error)
+            }
+        }
+        
+    }
+    
+    @objc public func configSDKWith(_ sdkSecretKey: String, _ sdkAppkey: String, _ googleClientId: String) {
+        kSDKSecretKey = sdkSecretKey
+        kSDKAppKey = sdkAppkey
+        kGoogleClientId = googleClientId
     }
     
     //MARK: - Package
@@ -73,19 +109,19 @@ class STDNetworkController: NSObject {
                                         success(convertedString, String(orderId), nil)
                                 }
                                 
-                            } catch let myJSONError {
-                                success(nil, nil, myJSONError.localizedDescription)
+                            } catch _ {
+                                success(nil, nil, "Đã xảy ra lỗi")
                             }
-                        } catch let error as NSError {
-                            success(nil, nil, "json serialization failed with error: \(error.localizedDescription)")
+                        } catch _ {
+                            success(nil, nil, "Đã xảy ra lỗi")
                         }
                     } else {
-                        success(nil, nil, "the upload task returned an error: \(error?.localizedDescription)")
+                        success(nil, nil, "Đã xảy ra lỗi")
                     }
                 }
                 task.resume()
             } catch let error as NSError {
-                success(nil, nil, "json serialization failed with error: \(error.localizedDescription)")
+                success(nil, nil, "Đã xảy ra lỗi \(error.localizedDescription)")
             }
             
         }
@@ -114,7 +150,7 @@ class STDNetworkController: NSObject {
                 return
             }
             
-            success(nil, "Create transaction error!");
+            success(nil, "Đã xảy ra lỗi");
         }
     }
     
@@ -142,7 +178,7 @@ class STDNetworkController: NSObject {
                     return
                 }
             }
-            success(nil, "Create transaction error!");
+            success(nil, "Đã xảy ra lỗi");
         }
     }
     
@@ -173,7 +209,7 @@ class STDNetworkController: NSObject {
                 success(packageArray, nil)
                 return
             }
-            success(nil, "Get list define package error!");
+            success(nil, "Đã xảy ra lỗi");
         }
     }
     
@@ -206,7 +242,7 @@ class STDNetworkController: NSObject {
                 return
             }
             
-            success(nil, "Login Google error!");
+            success(nil, "Đã xảy ra lỗi");
         }
     }
     
@@ -235,7 +271,7 @@ class STDNetworkController: NSObject {
                 return
             }
             
-            success(nil, "Login Google error!");
+            success(nil, "Đã xảy ra lỗi");
         }
     }
     
@@ -264,7 +300,7 @@ class STDNetworkController: NSObject {
                 return
             }
             
-            success(nil, "Login Facebook error!");
+            success(nil, "Đã xảy ra lỗi");
         }
     }
     
@@ -320,7 +356,7 @@ class STDNetworkController: NSObject {
                 return
             }
             
-            success(nil, "Login Quick Device error!");
+            success(nil, "Đã xảy ra lỗi");
         }
     }
     
@@ -346,7 +382,7 @@ class STDNetworkController: NSObject {
                 return
             }
             
-            success(nil, "Lost Password error!");
+            success(nil, "Đã xảy ra lỗi");
         }
     }
     
@@ -368,7 +404,7 @@ class STDNetworkController: NSObject {
                 return
             }
             
-            success(nil, "Logout By Access Token error!");
+            success(nil, "Đã xảy ra lỗi");
         }
     }
     
@@ -390,7 +426,7 @@ class STDNetworkController: NSObject {
                 return
             }
             
-            success(nil, "Get User By Access Token error!");
+            success(nil, "Đã xảy ra lỗi");
         }
     }
     
@@ -420,7 +456,7 @@ class STDNetworkController: NSObject {
                 return
             }
             
-            success(nil, "Login error!");
+            success(nil, "Đăng nhập thất bại");
         }
     }
     
@@ -449,7 +485,7 @@ class STDNetworkController: NSObject {
                 return
             }
             
-            success(nil, "Register error!");
+            success(nil, "Đăng ký thất bại");
         }
     }
     
@@ -476,13 +512,13 @@ class STDNetworkController: NSObject {
                 return
             }
             
-            success(nil, "Sync Quick Device error!");
+            success(nil, "Đồng bộ thất bại");
         }
     }
     
     //MARK: - Config
     
-    func getConfig( _ success:(@escaping(_ urlModel: STDURLModel?, _ error: String?) -> Void)) {
+    @objc public func getConfig( _ success:(@escaping(_ urlModel: STDURLModel?, _ error: String?) -> Void)) {
         let urlString = String(format: "%@config.html", kDomain)
         let timeCurrent = STDAppDataSingleton.sharedInstance.getTimeCurrent()
         
@@ -512,7 +548,7 @@ class STDNetworkController: NSObject {
                 return
             }
             
-            success(nil, "Get Config error!");
+            success(nil, "Đã xảy ra lỗi");
         }
     }
     
@@ -563,7 +599,7 @@ extension STDNetworkController {
     func getRequest(url: String, success:(@escaping(_ json: Any?, _ error: String?) -> Void)) {
         let sharedSession = URLSession.shared
         guard let url = URL(string: url) else {
-            success(nil, "Something went wrong")
+            success(nil, "Đã xảy ra lỗi")
             return
         }
         Indicator.sharedInstance.showIndicator()
@@ -582,7 +618,7 @@ extension STDNetworkController {
                 }
             }
             Indicator.sharedInstance.hideIndicator()
-            success (nil, "Something went wrong")
+            success (nil, "Đã xảy ra lỗi")
         }
         
         dataTask.resume()
@@ -591,7 +627,7 @@ extension STDNetworkController {
     func getRequest(url: String, params: [String:Any], headers: [String: String], success:(@escaping(_ json: Any?, _ error: String?) -> Void)) {
         let sharedSession = URLSession.shared
         guard let url = URL(string: url) else {
-            success(nil, "Something went wrong")
+            success(nil, "Đã xảy ra lỗi")
             return
         }
         
@@ -622,7 +658,7 @@ extension STDNetworkController {
                     }
                 }
                 
-                success (nil, "Something went wrong")
+                success (nil, "Đã xảy ra lỗi")
             }})
         
         dataTask.resume()
@@ -639,7 +675,7 @@ extension STDNetworkController {
         
         let sharedSession = URLSession.shared
         guard let url = URL(string: url) else {
-            success(nil, "Something went wrong")
+            success(nil, "Đã xảy ra lỗi")
             return
         }
         
@@ -685,7 +721,7 @@ extension STDNetworkController {
                     }
                 }
                 Indicator.sharedInstance.hideIndicator()
-                success (nil, "Something went wrong")
+                success (nil, "Đã xảy ra lỗi")
             }})
         
         dataTask.resume()

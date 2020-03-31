@@ -256,11 +256,6 @@ import StoreKit
 				default:
 					message = "\(baseMessage) Undefined Error"
 				}
-				
-				presentAlertControllerWithTitle(NSLocalizedString("Unable to Complete Transaction", comment: "Unable to complete transaction error alert title"),
-					message: NSLocalizedString("There was a problem completing the requested action for the following reason: \(message)", comment: "Unknown error alert message"))
-				
-				// Finish the transaction since we have just had our chance to deal with it
 				paymentQueue.finishTransaction(transaction)
 			case .purchased:
 				message = "\(index). Purchased: \(transaction.payment.productIdentifier)"
@@ -327,8 +322,8 @@ import StoreKit
 			
 			// If this is a resotred purchase, let the user know.
 			if transaction.transactionState == .restored {
-				presentAlertControllerWithTitle(NSLocalizedString("Purchases Restored", comment: "Purchased Restored alert title"),
-					message: NSLocalizedString("Your previous In-App purchases have been restored to this device.", comment: "Purchase Restored alert message"))
+//				presentAlertControllerWithTitle(NSLocalizedString("Purchases Restored", comment: "Purchased Restored alert title"),
+//					message: NSLocalizedString("Your previous In-App purchases have been restored to this device.", comment: "Purchase Restored alert message"))
 			}
 			
 			consoleLog(#function, message: "PURCHASE FOR PRODUCT IDENTIFIER RECORDED: \(transaction.payment.productIdentifier)")
@@ -344,17 +339,17 @@ import StoreKit
 	- parameter message: Message for the alert controller
 	*/
 	func presentAlertControllerWithTitle(_ title: String = "Default Title", message: String = "Default message.") {
-		let window = UIWindow(frame: UIScreen.main.bounds)
-		window.rootViewController = UIViewController()
-        window.windowLevel = UIWindow.Level.alert + 1
-		
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Generic OK button on alert"), style: UIAlertAction.Style.cancel, handler: { (action) -> Void in
-			window.isHidden = true
-		}))
-		
-		window.makeKeyAndVisible()
-		window.rootViewController?.present(alertController, animated: true, completion: nil)
+//		let window = UIWindow(frame: UIScreen.main.bounds)
+//		window.rootViewController = UIViewController()
+//        window.windowLevel = UIWindow.Level.alert + 1
+//		
+//        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+//        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Generic OK button on alert"), style: UIAlertAction.Style.cancel, handler: { (action) -> Void in
+//			window.isHidden = true
+//		}))
+//		
+//		window.makeKeyAndVisible()
+//		window.rootViewController?.present(alertController, animated: true, completion: nil)
 	}
 	
 	fileprivate func consoleLog(_ method:String, message: String = "") {

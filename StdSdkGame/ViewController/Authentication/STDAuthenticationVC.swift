@@ -12,7 +12,7 @@ import FBSDKLoginKit
 import AuthenticationServices
 import GoogleSignIn
 
-class STDAuthenticationVC: UIViewController {
+@objc public class STDAuthenticationVC: UIViewController {
     
     @IBOutlet weak var captchaLabel: UILabel!
     @IBOutlet weak var captchaTF: UITextField!
@@ -47,31 +47,31 @@ class STDAuthenticationVC: UIViewController {
     var isRegiser = false
     var wrongPasswordCount = 0
     
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         STDNetworkController.shared.getConfig { (_, _) in
             
         }
         nameTF.text = STDAppDataSingleton.sharedInstance.lastUserName
-        GIDSignIn.sharedInstance()?.clientID = "794169653863-73i2n4g8a2nn4rdi9rfp911cv2vo09gu.apps.googleusercontent.com"
+        GIDSignIn.sharedInstance()?.clientID = kGoogleClientId
         setupData()
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: true)
         observeAppleSignInState()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
+    override public func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if #available(iOS 13.0, *) {
             NotificationCenter.default.removeObserver(self)
         }
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    override public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         coordinator.animate(alongsideTransition: { (context) in
             
         }) { [weak self] (context) in
@@ -132,7 +132,7 @@ class STDAuthenticationVC: UIViewController {
         let loginManager = LoginManager()
         loginManager.logIn(permissions: ["public_profile", "email"], from: self) { [weak self] (result, error) in
             if let error = error {
-                success(nil, nil, error.localizedDescription)
+                success(nil, nil, "Đã xảy ra lỗi")
                 return
             }
             if result?.isCancelled == true {
@@ -141,35 +141,6 @@ class STDAuthenticationVC: UIViewController {
             }
             success(result?.token?.tokenString, result?.token?.userID, nil)
         }
-    }
-    
-    static func checkUserDidLogin(success:(@escaping(_ userModel: STDUserModel?, _ error: String?) -> Void)) {
-        guard let user = STDAppDataSingleton.sharedInstance.userProfileModel else {
-            success(nil, nil)
-            return
-        }
-        
-        guard let urlConfig = STDAppDataSingleton.sharedInstance.urlsConfig?.uRLSynQuickDevice, urlConfig.count > 0 else {
-            return
-        }
-        
-        let currentTime = STDAppDataSingleton.sharedInstance.getTimeCurrent()
-        let plainText = "\(user.accessToken)\(currentTime)"
-        let sign = STDAppDataSingleton.sharedInstance.hmac(plainText: plainText, key: kSDKSecretKey)
-        let params = ["AccessToken": user.accessToken,
-                      "AppKey": kSDKAppKey,
-                      "Sign": sign,
-                      "Time": currentTime];
-        
-        STDNetworkController.shared.getUserByAccessToken(params: params) { (user, error) in
-            if let user = user {
-                STDAppDataSingleton.sharedInstance.userProfileModel = user
-                success(user, nil)
-            } else {
-                success(nil, error)
-            }
-        }
-        
     }
     
     
@@ -399,17 +370,27 @@ class STDAuthenticationVC: UIViewController {
         let authCode = String(data: appleIDCredential?.authorizationCode ?? Data(), encoding: .utf8) ?? ""
         let plainText = "\(authCode)\(appleIDCredential?.user ?? "")\(currentTime)"
         let sign = STDAppDataSingleton.sharedInstance.hmac(plainText: plainText, key: kSDKSecretKey)
+        let appleUserIdentifier = appleIDCredential?.user ?? ""
+
+//        let dict = STDAppDataSingleton.sharedInstance.getAppleCredentialInfoWith(appleUserIdentifier)
+        let appleEmail = appleIDCredential?.email ?? ""
+        let appleGivenName = appleIDCredential?.fullName?.givenName ?? ""
+        let appleFamilyName = appleIDCredential?.fullName?.familyName ?? ""
         let params = ["AuthCode": authCode,
                       "AppleUserIdentifier": appleIDCredential?.user ?? "",
-                      "AppleEmail": appleIDCredential?.email ?? "",
-                      "AppleGivenName": appleIDCredential?.fullName?.givenName ?? "",
-                      "AppleFamilyName": appleIDCredential?.fullName?.familyName ?? "",
+                      "AppleEmail": appleEmail,
+                      "AppleGivenName": appleGivenName,
+                      "AppleFamilyName": appleFamilyName,
                       "DeviceID": UIDevice.current.identifierForVendor?.uuidString ?? "",
                       "Sign": sign,
                       "Time": currentTime];
         STDNetworkController.shared.loginApple(params: params) { [weak self] (userModel, error) in
             if let userModel = userModel {
                 STDAppDataSingleton.sharedInstance.userProfileModel = userModel
+                let info = ["AppleEmail": appleEmail,
+                            "AppleGivenName": appleGivenName,
+                            "AppleFamilyName": appleFamilyName]
+                STDAppDataSingleton.sharedInstance.setAppleCredential(appleUserIdentifier, value: info)
                 self?.didFinishLogin?(userModel)
             } else {
                 STDAlertController.showAlertController(title: "Thông báo", message: error, nil)
@@ -585,7 +566,7 @@ class STDAuthenticationVC: UIViewController {
 }
 
 extension STDAuthenticationVC: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
@@ -593,7 +574,7 @@ extension STDAuthenticationVC: UITextFieldDelegate {
 
 
 extension STDAuthenticationVC: GIDSignInDelegate {
-    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+    public func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         GIDSignIn.sharedInstance().delegate = nil
         if error != nil {
             STDAlertController.showAlertController(title: "Thông báo", message: "Đã xảy ra lỗi khi đăng nhập với Google", nil)
@@ -606,19 +587,27 @@ extension STDAuthenticationVC: GIDSignInDelegate {
 
 extension STDAuthenticationVC: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
     @available(iOS 13.0, *)
-    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+    public func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         return self.view.window!
     }
     
     
     @available(iOS 13.0, *)
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+    public func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
+            // Create an account in your system.
+            let userIdentifier = appleIDCredential.user
+            let userFirstName = appleIDCredential.fullName?.givenName
+            let userLastName = appleIDCredential.fullName?.familyName
+            let userEmail = appleIDCredential.email
+            print(userEmail)
+            //Navigate to other view controller
+        }
         signInAppleWithAuthorization(authorization: authorization)
     }
     @available(iOS 13.0, *)
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        let errorMess = error.localizedDescription
-        STDAlertController.showAlertController(title: "Thông báo", message: errorMess, nil)
+    public func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        STDAlertController.showAlertController(title: "Thông báo", message: "Thất bại", nil)
         
     }
 }

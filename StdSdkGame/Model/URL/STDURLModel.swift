@@ -9,7 +9,7 @@
 import Foundation
 
 
-class STDURLModel : NSObject, NSCoding{
+@objc public class STDURLModel : NSObject, NSCoding{
 
     var domainAPI : String = ""
     var uRLFBAccessToken : String = ""
@@ -64,7 +64,7 @@ class STDURLModel : NSObject, NSCoding{
         return dictionary
     }
 
-    @objc required init(coder aDecoder: NSCoder)
+    @objc required public init(coder aDecoder: NSCoder)
     {
          domainAPI = aDecoder.decodeObject(forKey: "DomainAPI") as? String ?? ""
          uRLFBAccessToken = aDecoder.decodeObject(forKey: "URL_FBAccessToken") as? String ?? ""
@@ -86,7 +86,7 @@ class STDURLModel : NSObject, NSCoding{
     * NSCoding required method.
     * Encodes mode properties into the decoder
     */
-    @objc func encode(with aCoder: NSCoder)
+    @objc public func encode(with aCoder: NSCoder)
     {
         aCoder.encode(domainAPI, forKey: "DomainAPI")
         aCoder.encode(uRLFBAccessToken, forKey: "URL_FBAccessToken")

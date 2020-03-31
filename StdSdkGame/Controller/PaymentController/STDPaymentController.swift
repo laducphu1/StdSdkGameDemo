@@ -9,8 +9,8 @@
 import UIKit
 import StoreKit
 
-class STDPaymentController: NSObject {
-    @objc static let sharedInstance = STDPaymentController()
+@objc public class STDPaymentController: NSObject {
+    @objc public static let sharedInstance = STDPaymentController()
     
     var productIdentifier = ""
     var productID = ""
@@ -18,8 +18,9 @@ class STDPaymentController: NSObject {
     var iapProducts = ""
     var packageSelected = STDPackageModel()
     var transactionID = ""
+    var orderGameID = ""
     
-    override init() {
+    override public init() {
         super.init()
         registerNotification()
     }
@@ -158,7 +159,8 @@ class STDPaymentController: NSObject {
         }
     }
     
-    func purchaseProductWithPackage(packageId: String) {
+    @objc public func purchaseProductWithPackage(packageId: String, orderID: String) {
+        self.orderGameID = orderID;
         StoreKitManager.sharedInstance.validateProductIdentifiers()
         productIdentifier = packageId
         if SKPaymentQueue.canMakePayments() == false {
@@ -204,7 +206,7 @@ class STDPaymentController: NSObject {
     }
     
     private func chargeToGameWithOrderID(orderID: String, orderIDIAP: String, productID: String, dataReceipt: String, packageID: String, transactionID: String) {
-        let orderID = "game556_784_abc"
+        let orderID = orderGameID
         guard let accessToken = STDAppDataSingleton.sharedInstance.userProfileModel?.accessToken else {
             STDAlertController.showAlertController(title: "Thông báo", message: "Đăng nhập để tiếp tục", nil)
             Indicator.sharedInstance.hideIndicator()

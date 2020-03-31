@@ -11,18 +11,18 @@ import UIKit
 import Foundation
 
 
-class STDUserModel : NSObject, NSCoding {
+@objc public class STDUserModel : NSObject, NSCoding {
 
-    @objc var accessToken : String = ""
-    var userID : String = ""
-    var avatar : String = ""
-    var birthDay : String = ""
-    var displayName : String = ""
-    var email : String = ""
-    var gender : String = ""
-    var primaryMobile : String = ""
-    var userName : String = ""
-    var isSyn : Bool = false
+    @objc public var accessToken : String = ""
+    public var userID : String = ""
+    public var avatar : String = ""
+    public var birthDay : String = ""
+    public var displayName : String = ""
+    public var email : String = ""
+    public var gender : String = ""
+    public var primaryMobile : String = ""
+    public var userName : String = ""
+    public var isSyn : Bool = false
 
 
     override init() {
@@ -69,7 +69,7 @@ class STDUserModel : NSObject, NSCoding {
     * NSCoding required initializer.
     * Fills the data from the passed decoder
     */
-    @objc required init(coder aDecoder: NSCoder)
+    @objc required public init(coder aDecoder: NSCoder)
     {
          accessToken = aDecoder.decodeObject(forKey: "AccessToken") as? String ?? ""
          userID = aDecoder.decodeObject(forKey: "UserID") as? String ?? ""
@@ -83,7 +83,7 @@ class STDUserModel : NSObject, NSCoding {
          isSyn = aDecoder.decodeObject(forKey: "isSyn") as? Bool ?? false
     }
 
-    @objc func encode(with aCoder: NSCoder)
+    @objc public func encode(with aCoder: NSCoder)
     {
         aCoder.encode(accessToken, forKey: "AccessToken")
         aCoder.encode(userID, forKey: "UserID")
@@ -97,7 +97,7 @@ class STDUserModel : NSObject, NSCoding {
         aCoder.encode(isSyn, forKey: "isSyn")
     }
     
-    static func logOutUser( _ success:(@escaping(_ isSuccess: Bool) -> Void)) {
+    @objc static public func logOutUser( _ success:(@escaping(_ isSuccess: Bool) -> Void)) {
         STDNetworkController.shared.logOutUser { (isSuccess, error) in
             if isSuccess {
                 STDAppDataSingleton.sharedInstance.userProfileModel = nil

@@ -8,22 +8,22 @@
 
 import UIKit
 
-class STDMainViewController: UIViewController {
+@objc public class STDMainViewController: UIViewController {
 
     @IBOutlet weak var heightViewConstraint: NSLayoutConstraint!
     @IBOutlet weak var widthViewConstraint: NSLayoutConstraint!
     @IBOutlet weak var mainView: UIView!
     
-    var didFinishLogin: ((_ user: STDUserModel) -> Void)?
+    @objc public var didFinishLogin: ((_ user: STDUserModel) -> Void)?
 
     
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
     
-    override func viewDidLayoutSubviews() {
+    override public func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         if view.frame.size.height < view.frame.size.width {
             if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad) { // horizontal
@@ -44,7 +44,7 @@ class STDMainViewController: UIViewController {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let resourcesBundle = Bundle(for: STDAuthenticationVC.self)
         let vc = STDAuthenticationVC.init(nibName: "STDAuthenticationVC", bundle: resourcesBundle)

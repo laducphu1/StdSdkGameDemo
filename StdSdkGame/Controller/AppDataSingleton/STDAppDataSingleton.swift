@@ -24,16 +24,16 @@ enum Defaults {
     }
 }
 
-class STDAppDataSingleton: NSObject {
+@objc public class STDAppDataSingleton: NSObject {
     
-    @objc static let sharedInstance = STDAppDataSingleton()
+    @objc public static let sharedInstance = STDAppDataSingleton()
     
-    @objc var urlsConfig: STDURLModel?
-    var serverID: String?
-    var orderID: String = ""
-    var debugsString: String = ""
-    var isEnableDebugs: Bool = false
-    var lastUserName: String {
+    @objc public var urlsConfig: STDURLModel?
+    @objc public var serverID: String?
+    @objc public var orderID: String = ""
+    @objc public var debugsString: String = ""
+    @objc public var isEnableDebugs: Bool = false
+    @objc public var lastUserName: String {
         get {
             return UserDefaults.standard.object(forKey: "kLastUserName") as? String ?? ""
         }
@@ -41,9 +41,10 @@ class STDAppDataSingleton: NSObject {
             UserDefaults.standard.set(userName, forKey: "kLastUserName")
         }
     }
+    
     var timeCurrentFormatter: DateFormatter!
         
-    private override init() {
+    public override init() {
         super.init()
         
         self.serverID = "s1";
@@ -51,8 +52,27 @@ class STDAppDataSingleton: NSObject {
         timeCurrentFormatter.dateFormat = "yyyyMMddHHmmss"
     }
     
+    func getAppleCredentialInfoWith(_ key: String) -> [String: String] {
+        if let dict = UserDefaults.standard.object(forKey: "kAppleCredentials") as? [String: [String: String]], let info = dict[key] {
+            return info
+        }
+        return [String: String]()
+    }
+    
+    func setAppleCredential(_ key: String, value: [String: String]) {
+        let dict = [key: value]
+        UserDefaults.standard.set(dict, forKey: "kAppleCredentials")
+
+    }
+    
     func getTimeCurrent() -> String {
         timeCurrentFormatter.string(from: Date())
+    }
+    
+    public func getMainViewController() -> UIViewController {
+        let homeStoryboard = UIStoryboard.init(name: "Home", bundle: nil)
+        let vc = homeStoryboard.instantiateViewController(withIdentifier: "HomeVC")
+        return vc
     }
     
     @objc func hmac(plainText: String, key: String) -> String {
@@ -115,7 +135,7 @@ class STDAppDataSingleton: NSObject {
         }
     }
     
-    @objc var userProfileModel: STDUserModel? {
+    @objc public var userProfileModel: STDUserModel? {
         get {
             if let userProfileDict = Defaults.object(forKey: "UserProfileModel") as? [String : Any], userProfileDict.count != 0 {
                 return STDUserModel.init(fromDictionary: userProfileDict)

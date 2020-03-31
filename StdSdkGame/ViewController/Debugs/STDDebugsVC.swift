@@ -8,21 +8,21 @@
 
 import UIKit
 
-class STDDebugsVC: UIViewController {
+public class STDDebugsVC: UIViewController {
 
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var debugsTextView: UITextView!
     
     var debugsArray = [String]()
     
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         debugsTextView.text = STDAppDataSingleton.sharedInstance.debugsString;
         registerObserversNotification()
         // Do any additional setup after loading the view.
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
+    override public func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         removeObservers()
     }
