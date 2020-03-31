@@ -21,12 +21,12 @@ s.homepage = "https://github.com/laducphu1/StdSdkGameDemo"
 
 # 6 - Replace this URL with your own Git URL from "Quick Setup"
 s.source = { :git => "https://github.com/laducphu1/StdSdkGameDemo.git", :tag => "#{s.version}"}
-
+  
 # 7
 s.framework = "UIKit"
 s.dependency 'FBSDKLoginKit'
 s.dependency 'GoogleSignIn'
-
+s.static_framework = true
 # 8
 s.source_files = "StdSdkGame/**/*.{swift}"
 
