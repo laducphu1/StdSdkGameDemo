@@ -19,6 +19,7 @@ import StoreKit
     var packageSelected = STDPackageModel()
     var transactionID = ""
     var orderGameID = ""
+    var otherData = ""
     
     override public init() {
         super.init()
@@ -159,7 +160,8 @@ import StoreKit
         }
     }
     
-    @objc public func purchaseProductWithPackage(packageId: String, orderID: String) {
+    @objc public func purchaseProductWithPackage(packageId: String, orderID: String, otherData: String) {
+        self.otherData = otherData
         self.orderGameID = orderID;
         StoreKitManager.sharedInstance.validateProductIdentifiers()
         productIdentifier = packageId
@@ -230,7 +232,8 @@ import StoreKit
                       "OrderID": orderID,
                       "ProductID": productID,
                       "TransactionID": transactionID,
-                      "ServerID":"s1"];
+                      "ServerID":"s1",
+                      "OtherData": otherData];
         
         STDNetworkController.shared.chargeToGame(params: params) { (paymentModel, error) in
             if paymentModel != nil {
