@@ -20,6 +20,7 @@ import StoreKit
     var transactionID = ""
     var orderGameID = ""
     var otherData = ""
+    public var didCompletePurchase: ((_ success: Bool, _ error: String?) -> Void)?
     
     override public init() {
         super.init()
@@ -54,10 +55,12 @@ import StoreKit
                     self.chargeToGameWithOrderID(orderID: UUID().uuidString, orderIDIAP: orderIPAID, productID: self.packageSelected.productIDStore, dataReceipt: jsonString, packageID: self.packageSelected.packageID, transactionID: self.transactionID)
                 } else {
                     STDAlertController.showAlertController(title: "Thông báo", message: "Đã xảy ra lỗi", nil)
+                    self.didCompletePurchase?(false, "Đã xảy ra lỗi")
                 }
             break
             case .error(error: let error):
                 STDAlertController.showAlertController(title: "Thông báo", message: error.localizedDescription, nil)
+                self?.didCompletePurchase?(false, error.localizedDescription)
                 break
             }
             
@@ -122,6 +125,7 @@ import StoreKit
                     errorString = (error as NSError).localizedDescription
                 }
                 STDAlertController.showAlertController(title: "Thông báo", message: errorString, nil)
+                self?.didCompletePurchase?(false, errorString)
             }
         }
         
@@ -135,6 +139,8 @@ import StoreKit
         guard let accessToken = STDAppDataSingleton.sharedInstance.userProfileModel?.accessToken else {
             STDAlertController.showAlertController(title: "Thông báo", message: "Đăng nhập để tiếp tục", nil)
             Indicator.sharedInstance.hideIndicator()
+            self.didCompletePurchase?(false, "Đăng nhập để tiếp tục")
+
             return
         }
         
@@ -155,6 +161,7 @@ import StoreKit
                 self?.purchaseProduct()
             } else {
                 STDAlertController.showAlertController(title: "Thông báo", message: error, nil)
+                self?.didCompletePurchase?(false, error ?? "Đã xảy ra lỗi")
                 Indicator.sharedInstance.hideIndicator()
             }
         }
@@ -167,12 +174,15 @@ import StoreKit
         productIdentifier = packageId
         if SKPaymentQueue.canMakePayments() == false {
             STDAlertController.showAlertController(title: "Thông báo", message: "Lỗi khi mua sản phẩm!", nil)
+            self.didCompletePurchase?(false, "Lỗi khi mua sản phẩm!")
             Indicator.sharedInstance.hideIndicator()
             return
         }
         
         guard let accessToken = STDAppDataSingleton.sharedInstance.userProfileModel?.accessToken else {
             STDAlertController.showAlertController(title: "Thông báo", message: "Đăng nhập để tiếp tục", nil)
+            self.didCompletePurchase?(false, "Đăng nhập để tiếp tục")
+
             Indicator.sharedInstance.hideIndicator()
             return
         }
@@ -202,7 +212,9 @@ import StoreKit
                 }
             } else {
                 Indicator.sharedInstance.hideIndicator()
+                
                 STDAlertController.showAlertController(title: "Thông báo", message: error, nil)
+                self?.didCompletePurchase?(false, error ?? "Đã xảy ra lỗi")
             }
         }
     }
@@ -211,6 +223,7 @@ import StoreKit
         let orderID = orderGameID
         guard let accessToken = STDAppDataSingleton.sharedInstance.userProfileModel?.accessToken else {
             STDAlertController.showAlertController(title: "Thông báo", message: "Đăng nhập để tiếp tục", nil)
+            self.didCompletePurchase?(false, "Đã xảy ra lỗi")
             Indicator.sharedInstance.hideIndicator()
             return
         }
@@ -235,12 +248,13 @@ import StoreKit
                       "ServerID":"s1",
                       "OtherData": otherData];
         
-        STDNetworkController.shared.chargeToGame(params: params) { (paymentModel, error) in
+        STDNetworkController.shared.chargeToGame(params: params) { [weak self] (paymentModel, error) in
             if paymentModel != nil {
                 STDAlertController.showAlertController(title: "Thông báo", message: "Thanh toán thành công", nil)
+                self?.didCompletePurchase?(true, nil)
             } else {
                 STDAlertController.showAlertController(title: "Thông báo", message: error, nil)
-                
+                self?.didCompletePurchase?(false, error)
             }
             Indicator.sharedInstance.hideIndicator()
         }

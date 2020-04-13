@@ -69,11 +69,11 @@ enum Defaults {
         timeCurrentFormatter.string(from: Date())
     }
     
-    public func getMainViewController() -> UIViewController {
-        let homeStoryboard = UIStoryboard.init(name: "Home", bundle: nil)
-        let vc = homeStoryboard.instantiateViewController(withIdentifier: "HomeVC")
-        return vc
-    }
+//    public func getMainViewController() -> UIViewController {
+//        let homeStoryboard = UIStoryboard.init(name: "Home", bundle: nil)
+//        let vc = homeStoryboard.instantiateViewController(withIdentifier: "HomeVC")
+//        return vc
+//    }
     
     @objc func hmac(plainText: String, key: String) -> String {
         let encoding = String.Encoding.ascii

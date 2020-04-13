@@ -92,7 +92,6 @@
 		F58253E024221042009CD8A8 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		F58253E324221042009CD8A8 /* STDString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STDString.swift; sourceTree = "<group>"; };
 		F58253E524221042009CD8A8 /* STDUIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STDUIViewController.swift; sourceTree = "<group>"; };
-		F58253E824221042009CD8A8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F58253E924221042009CD8A8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F58253EC24221042009CD8A8 /* STDUserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STDUserModel.swift; sourceTree = "<group>"; };
 		F58253EE24221042009CD8A8 /* STDURLModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STDURLModel.swift; sourceTree = "<group>"; };
@@ -325,7 +324,6 @@
 		F58253E724221042009CD8A8 /* Image */ = {
 			isa = PBXGroup;
 			children = (
-				F58253E824221042009CD8A8 /* Assets.xcassets */,
 			);
 			path = Image;
 			sourceTree = "<group>";
