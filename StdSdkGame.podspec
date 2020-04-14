@@ -27,7 +27,7 @@ s.framework = "UIKit"
 s.dependency 'FBSDKLoginKit'
 s.dependency 'GoogleSignIn'
 
-
+s.static_framework = true
 # 8
 s.source_files = "StdSdkGame/**/*.{swift}"
 
