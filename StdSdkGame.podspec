@@ -25,7 +25,7 @@ s.source = { :git => "https://github.com/laducphu1/StdSdkGameDemo.git", :tag => 
 # 7
 s.framework = "UIKit"
 
-s.static_framework = true
+s.static_framework = false
 # 8
 s.source_files = "StdSdkGame/**/*.{swift}"
 
