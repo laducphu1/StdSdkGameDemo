@@ -24,8 +24,6 @@ s.source = { :git => "https://github.com/laducphu1/StdSdkGameDemo.git", :tag => 
   
 # 7
 s.framework = "UIKit"
-s.dependency 'FBSDKLoginKit'
-s.dependency 'GoogleSignIn'
 
 s.static_framework = true
 # 8
