@@ -17,15 +17,15 @@ s.license = { :type => "MIT", :file => "LICENSE" }
 s.author = { "Jude" => "chidungc2@gmail.com" }
 
 # 5 - Replace this URL with your own Github page's URL (from the address bar)
-s.homepage = "https://github.com/laducphu1/StdSdkGameDemo"
+s.homepage = "https://github.com/dungnc/StdSdkGameDemo"
 
 # 6 - Replace this URL with your own Git URL from "Quick Setup"
-s.source = { :git => "https://github.com/laducphu1/StdSdkGameDemo.git", :tag => "#{s.version}"}
+s.source = { :git => "https://github.com/dungnc/StdSdkGameDemo.git", :tag => "#{s.version}"}
   
 # 7
 s.framework = "UIKit"
 
-s.static_framework = true
+s.static_framework = false
 # 8
 s.source_files = "StdSdkGame/**/*.{swift}"
 
