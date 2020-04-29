@@ -28,6 +28,7 @@ import Foundation
 
     init(fromDictionary dictionary: [String:Any]){
         domainAPI = dictionary["DomainAPI"] as? String ?? ""
+        kDomain = domainAPI
         uRLFBAccessToken = dictionary["URL_FBAccessToken"] as? String ?? ""
         uRLGGAccessToken = dictionary["URL_GGAccessToken"] as? String ?? ""
         uRLGetUserToken = dictionary["URL_GetUserToken"] as? String ?? ""
