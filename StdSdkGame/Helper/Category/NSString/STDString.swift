@@ -11,6 +11,10 @@ import CommonCrypto
 
 extension String {
     
+    var localizable: String {
+        return NSLocalizedString(self, tableName: "Localizable", value: self, comment: "")
+    }
+    
     static func generateCaptcha() -> String {
         var captcha = ""
         captcha = "\(captcha)\(Int.random(in: 0 ... 9))"

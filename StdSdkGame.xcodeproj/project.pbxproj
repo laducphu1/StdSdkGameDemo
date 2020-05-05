@@ -48,6 +48,7 @@
 		F582541824221042009CD8A8 /* STDURLModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58253EE24221042009CD8A8 /* STDURLModel.swift */; };
 		F582541924221042009CD8A8 /* STDPackageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58253F024221042009CD8A8 /* STDPackageModel.swift */; };
 		F582541A24221042009CD8A8 /* STDResultPaymentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58253F124221042009CD8A8 /* STDResultPaymentModel.swift */; };
+		F5D614F42461328B00446EE6 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F5D614F62461328B00446EE6 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -97,6 +98,8 @@
 		F58253EE24221042009CD8A8 /* STDURLModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STDURLModel.swift; sourceTree = "<group>"; };
 		F58253F024221042009CD8A8 /* STDPackageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STDPackageModel.swift; sourceTree = "<group>"; };
 		F58253F124221042009CD8A8 /* STDResultPaymentModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STDResultPaymentModel.swift; sourceTree = "<group>"; };
+		F5D614F52461328B00446EE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F5D614F72461328F00446EE6 /* vi-VN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "vi-VN"; path = "vi-VN.lproj/Localizable.strings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -317,6 +320,7 @@
 			children = (
 				F58253E724221042009CD8A8 /* Image */,
 				F58253E924221042009CD8A8 /* Info.plist */,
+				F5D614F62461328B00446EE6 /* Localizable.strings */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -427,6 +431,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"vi-VN",
 			);
 			mainGroup = F582539E24220FC0009CD8A8;
 			productRefGroup = F58253A924220FC0009CD8A8 /* Products */;
@@ -444,6 +449,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F58253FA24221042009CD8A8 /* STDAuthenticationVC.xib in Resources */,
+				F5D614F42461328B00446EE6 /* Localizable.strings in Resources */,
 				F58253F724221042009CD8A8 /* STDDebugsVC.xib in Resources */,
 				F58253FE24221042009CD8A8 /* STDForgetPasswordVC.xib in Resources */,
 				F58253F624221042009CD8A8 /* MainViewController.xib in Resources */,
@@ -537,6 +543,18 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		F5D614F62461328B00446EE6 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F5D614F52461328B00446EE6 /* en */,
+				F5D614F72461328F00446EE6 /* vi-VN */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		F58253AE24220FC0009CD8A8 /* Debug */ = {

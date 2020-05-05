@@ -1,0 +1,41 @@
+/* 
+  Localizable.strings
+  StdSdkGame
+
+  Created by Fu on 5/5/20.
+  Copyright © 2020 Fu. All rights reserved.
+*/
+"Đã xảy ra lỗi" = "Đã xảy ra lỗi";
+"Đã huỷ" = "Đã huỷ";
+"Vui lòng nhập tên đăng nhập" = "Vui lòng nhập tên đăng nhập";
+"Tên đăng nhập không đúng định dạng" = "Tên đăng nhập không đúng định dạng";
+"Vui lòng nhập mật khẩu" = "Vui lòng nhập mật khẩu";
+"Vui lòng nhập mã captcha chính xác" = "Vui lòng nhập mã captcha chính xác";
+"Tên đăng nhập dài 6-32 ký tự Thường và Số" = "Tên đăng nhập dài 6-32 ký tự Thường và Số";
+"Tài khoản không đúng định dạng" = "Tài khoản không đúng định dạng";
+"Số điện thoại không đúng định dạng" = "Số điện thoại không đúng định dạng";
+"Email không đúng định dạng" = "Email không đúng định dạng";
+"Vui lòng nhập tài khoản và mật khẩu" = "Vui lòng nhập tài khoản và mật khẩu";
+"Vui lòng nhập email" = "Vui lòng nhập email";
+"Đồng bộ thất bại" = "Đồng bộ thất bại";
+"Chiều dài 6 đến 32 ký tự. 1 chữ cái (A-Za-z) 1 số (0-9)" = "Chiều dài 6 đến 32 ký tự. 1 chữ cái (A-Za-z) 1 số (0-9)";
+"Vui lòng nhập mật khẩu xác nhận" = "Vui lòng nhập mật khẩu xác nhận";
+"Mật khẩu xác nhận không đúng" = "Mật khẩu xác nhận không đúng";
+"Thông báo" = "Thông báo";
+"Đã xảy ra lỗi khi đăng nhập với Google" = "Đã xảy ra lỗi khi đăng nhập với Google";
+"Thất bại" = "Thất bại";
+"Đã huỷ" = "Đã huỷ";
+"Đăng xuất thất bại" = "Đăng xuất thất bại";
+"Đăng ký thất bại" = "Đăng ký thất bại";
+"Lỗi không xác định. Vui lòng liên hệ bộ phận hỗ trợ" = "Lỗi không xác định. Vui lòng liên hệ bộ phận hỗ trợ";
+"Không được phép thanh toán" = "Không được phép thanh toán";
+"Đã hủy thanh toán" = "Đã hủy thanh toán";
+"Mã định danh mua hàng không hợp lệ" = "Mã định danh mua hàng không hợp lệ";
+"Thiết bị không được phép thanh toán" = "Thiết bị không được phép thanh toán";
+"Sản phẩm không có sẵn trong cửa hàng hiện tại" = "Sản phẩm không có sẵn trong cửa hàng hiện tại";
+"Truy cập vào dịch vụ đám mây không được phép" = "Truy cập vào dịch vụ đám mây không được phép";
+"Không thể kết nối với mạng" = "Không thể kết nối với mạng";
+"Người dùng đã thu hồi quyền sử dụng dịch vụ đám mây này" = "Người dùng đã thu hồi quyền sử dụng dịch vụ đám mây này";
+"Đăng nhập để tiếp tục" = "Đăng nhập để tiếp tục";
+"Lỗi khi mua sản phẩm!" = "Lỗi khi mua sản phẩm!";
+
