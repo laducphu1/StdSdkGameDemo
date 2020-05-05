@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
 
 # 1
 s.platform = :ios
-s.ios.deployment_target = '10.0'
+s.ios.deployment_target = '9.0'
 s.name = "StdSdkGame"
 s.summary = "STDGame allow user connect to STDGAme"
 s.requires_arc = true
@@ -25,7 +25,9 @@ s.source = { :git => "https://github.com/dungnc/StdSdkGameDemo.git", :tag => "#{
 # 7
 s.framework = "UIKit"
 
-#s.static_framework = true
+s.static_framework = true
+s.dependency 'FBSDKLoginKit'
+s.dependency 'GoogleSignIn'
 # 8
 s.source_files = "StdSdkGame/**/*.{swift}"
 
