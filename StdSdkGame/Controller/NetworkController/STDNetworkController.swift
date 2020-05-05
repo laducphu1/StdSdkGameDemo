@@ -519,6 +519,18 @@ var kGoogleClientId = "794169653863-73i2n4g8a2nn4rdi9rfp911cv2vo09gu.apps.google
     //MARK: - Config
     
     @objc public func getConfig( _ success:(@escaping(_ urlModel: STDURLModel?, _ error: String?) -> Void)) {
+        if let path = Bundle.main.path(forResource: "Info", ofType: "plist") {
+           let dict = NSDictionary(contentsOfFile: path)
+            if let sdkAppKey = dict?["SDKAppKey"] as? String {
+                kSDKAppKey = sdkAppKey
+            }
+            if let sdkScretKey = dict?["SDKScretKey"] as? String {
+                kSDKSecretKey = sdkScretKey
+            }
+            if let googleClientID = dict?["GoogleClientID"] as? String {
+                kGoogleClientId = googleClientID
+            }
+        }
         let urlString = String(format: "%@config.html", kDomain)
         let timeCurrent = STDAppDataSingleton.sharedInstance.getTimeCurrent()
         
